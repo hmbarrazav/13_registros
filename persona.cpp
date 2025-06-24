@@ -18,11 +18,23 @@ int main(){
         cout<<"Ingresa fecha de nacimiento (dd mm aaaa): ";
         cin>>lista[i].fn[0]>>lista[i].fn[1]>>lista[i].fn[2];
     }
-
+    /*
     for(int i=0; i<n;i++){
         cout<<lista[i].nom<<endl;
         cout<<lista[i].fn[0]<<"/"<<lista[i].fn[1]<<"/"<<lista[i].fn[2]<<endl;
         cout<<"---------------"<<endl;        
+    }*/
+
+    cout<<"Ingresa un mes (mm): "; cin>>mes;
+    while (mes != 0){
+        for(int i=0; i<n; i++){
+            if(lista[i].fn[1] == mes){
+                cout<<lista[i].nom<<endl;
+                cout<<lista[i].fn[0]<<"/"<<lista[i].fn[1]<<"/"<<lista[i].fn[2]<<endl;
+                cout<<"---------------"<<endl;
+            }
+        }
+        cout<<"Ingresa un mes (mm): "; cin>>mes;
     }
     return 0;
 }
