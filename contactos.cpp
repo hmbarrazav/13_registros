@@ -1,4 +1,5 @@
 #include<iostream>
+#define MAX 10
 using namespace std;
 
 struct correo{
@@ -17,6 +18,9 @@ void leerCorreo(correo &, string, string);
 void leerContacto(contactoEmail &, string, char, int, correo);
 void imprimeContacto(contactoEmail &);
 
+void agregarContacto(contactoEmail [], contactoEmail, int &);
+void mostrarContactos(contactoEmail [], int);
+
 int main(){
     int n, op;
     string nom, user, domain;
@@ -31,12 +35,12 @@ int main(){
         cout<<"1. Agregar contacto"<<endl;
         cout<<"2. Mostrar contactos"<<endl;
         cout<<"0. Salir"<<endl;
-        cout<<"Elige una opcion: "; cin>>op;
+        cout<<"\nElige una opcion: "; cin>>op;
         cout<<endl;
         switch(op){
             case 1:
                 cin.ignore();
-                cout<<"Ingrese el nombre del contacto: "; getline(cin,nom);
+                cout<<"Ingrese los nombres: "; getline(cin,nom);
                 cout<<"Ingrese el sexo (M/F): "; cin>>sex;
                 cout<<"Ingrese la edad: "; cin>>edad;
                 cout<<"Ingrese el correo electronico (usuario@dominio): "<<endl;
@@ -50,26 +54,30 @@ int main(){
                 imprimeContacto(cont);
                 cout<<"\nEsta informacion es correcta? (S/N): ";
                 cin>>SN;
-                if(SN == 'S'){
-                    lista[n] = cont;
-                    n++;
-                    cout<<"Registro exitoso!"<<endl;
+                if(SN == 'S' || SN == 's'){
+                    if(n < MAX){
+                        agregarContacto(lista,cont,n);
+                        cout<<"Registro exitoso!"<<endl;
+                    }
+                    else{
+                        cout<<"Limite de contactos alcanzado"<<endl;
+                    }
                 }
                 else{
                     cout<<"Se cancelo la operacion"<<endl;
                 }
                 break;
             case 2:
-                for(int i = 0; i < n; i++){
-                    cout<<"Contacto #"<<i<<endl;
-                    imprimeContacto(lista[i]);
-                    cout<<endl;
+                if(n == 0){
+                    cout<<"Aun no se han registrado contactos"<<endl;
                 }
+                else
+                    mostrarContactos(lista,n);
                 break;
             case 0:
                 cout<<"Esta seguro de salir? (S/N): ";
                 cin>>SN;
-                if(SN != 'S'){
+                if(SN != 'S' && SN != 's'){
                     op = -1;
                     cout<<"Se cancelo la operacion"<<endl;
                 }
@@ -104,4 +112,17 @@ void imprimeContacto(contactoEmail &c){
     cout<<"Sexo: "<<c.sex<<endl;
     cout<<"Edad: "<<c.edad<<endl;
     cout<<"Email: "<<c.email.user<<"@"<<c.email.domain<<endl;
+}
+
+void agregarContacto(contactoEmail lista[], contactoEmail cE, int &cant){
+        lista[cant] = cE;
+        cant++;
+}
+
+void mostrarContactos(contactoEmail lista[], int cant){
+    for(int i = 0; i < cant; i++){
+        cout<<"Contacto #"<<i+1<<endl;
+        imprimeContacto(lista[i]);
+        cout<<"----------------------------------------"<<endl;
+    }
 }
